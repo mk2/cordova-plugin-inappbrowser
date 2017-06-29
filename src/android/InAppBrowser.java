@@ -106,7 +106,7 @@ public class InAppBrowser extends CordovaPlugin {
     private boolean clearSessionCache = false;
     private boolean hadwareBackButton = true;
     private boolean mediaPlaybackRequiresUserGesture = false;
-    private boolean validateSsl = true;
+    private boolean validateSsl = false;
     private boolean shouldPauseInAppBrowser = false;
     private boolean useWideViewPort = true;
     private ValueCallback<Uri> mUploadCallback;
@@ -533,7 +533,7 @@ public class InAppBrowser extends CordovaPlugin {
         showZoomControls = true;
         openWindowHidden = false;
         mediaPlaybackRequiresUserGesture = false;
-        validateSsl = true;
+        validateSsl = false;
 
         if (features != null) {
             Boolean show = features.get(LOCATION);
@@ -1090,12 +1090,8 @@ public class InAppBrowser extends CordovaPlugin {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-         if (this.validateSsl) {
-            super.onReceivedSslError(view, handler, error);
-         } else {
             LOG.d(LOG_TAG, "Ignoring SSL certificate validation");
             handler.proceed();
-         }
         }
 
         public void setSslValidationFlag(boolean flag) {
